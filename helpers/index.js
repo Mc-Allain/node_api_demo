@@ -1,5 +1,4 @@
 const { body, validationResult } = require("express-validator/check");
-const { isUndefined } = require("lodash");
 
 exports.pokemonTypeCreateValidation = [
     body('value')
@@ -15,9 +14,9 @@ exports.pokemonTypeCreateValidation = [
         .withMessage('Pokemon type color code must be 7 characters long.')
         .custom(value => {
             const colorCodeRegExp = new RegExp('^#([A-Fa-f0-9]{6})$');
-    
+
             const isValidColorCode = colorCodeRegExp.test(value?.trim());
-    
+
             if (isValidColorCode) {
                 return true;
             } else {
@@ -39,9 +38,9 @@ exports.pokemonTypeUpdateValidation = [
         .withMessage('Pokemon type color code must be 7 characters long.')
         .custom(value => {
             const colorCodeRegExp = new RegExp('^#([A-Fa-f0-9]{6})$');
-    
+
             const isValidColorCode = colorCodeRegExp.test(value?.trim());
-    
+
             if (isValidColorCode) {
                 return true;
             } else {
@@ -49,6 +48,19 @@ exports.pokemonTypeUpdateValidation = [
             }
         })
         .withMessage('Pokemon type color code must be a valid hex color.'),
+];
+
+exports.typeEffectivenessCreateValidation = [
+    body('type_id')
+        .not().isEmpty()
+        .withMessage('Please enter the Pokemon type id.'),
+
+    body('effectiveness')
+        .not().isEmpty()
+        .withMessage('Please enter the effectiveness.')
+        .custom((value, { req }) => {
+            
+        }),
 ];
 
 exports.expressValidator = (req, res, next) => {

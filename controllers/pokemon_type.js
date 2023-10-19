@@ -4,14 +4,16 @@ const PokemonType = require('../models/pokemon_type');
 exports.getPokemonTypes = (req, res) => {
     const params = req.params;
 
-    let pokemonType = PokemonType;
+    const { id: filterId, value: filterValue } = params;
 
-    if (params.id) {
-        pokemonType = pokemonType.findOne({ _id: params.id });
-    } else if (params.value) {
-        pokemonType = pokemonType.findOne({ value: params.value });
+    let pokemonType;
+
+    if (!isUndefined(filterId)) {
+        pokemonType = PokemonType.findOne({ _id: filterId });
+    } else if (!isUndefined(filterValue)) {
+        pokemonType = PokemonType.findOne({ value: filterValue });
     } else {
-        pokemonType = pokemonType.find();
+        pokemonType = PokemonType.find();
     }
 
     pokemonType.select('_id value color_code')

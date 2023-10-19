@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 
 // routes
 const pokemonTypeRoutes = require('./routes/pokemon_type');
+const typeEffectivenessRoutes = require('./routes/type_effectiveness');
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(expressValidator());
 
 
 app.use('/pokemon_types', pokemonTypeRoutes);
+app.use('/type_effectiveness', typeEffectivenessRoutes);
 
 const port = 3001;
 
